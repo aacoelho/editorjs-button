@@ -78,6 +78,7 @@
 
 .anyButtonContainer__anyButtonHolder {
   text-align: center;
+  display: flex;
 }
 
 .cdx-btn {
@@ -111,4 +112,14 @@
   color: #fff;
   background-color: #7c7c7c;
   border-color: #7c7c7c;
+}
+
+.cdx-pr-button--left {
+  margin-right: auto;
+}
+.cdx-pr-button--center {
+  margin: 0 auto;
+}
+.cdx-pr-button--right {
+  margin-left: auto;
 }
