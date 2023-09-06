@@ -117,7 +117,7 @@ export default class AnyButton {
         const _CSS = {
             baseClass: this.api.styles.block,
             hide: "hide",
-            btn: "btn",
+            btn: "cdx-btn",
             container: "anyButtonContainer",
             input: "anyButtonContainer__input",
 
@@ -126,7 +126,7 @@ export default class AnyButton {
             inputLink: "anyButtonContainer__input--link",
             registButton: "anyButtonContainer__registerButton",
             anyButtonHolder: "anyButtonContainer__anyButtonHolder",
-            btnColor: "btn--default",
+            btnColor: "cdx-btn--default",
             toggleSwitch: "toggle-switch",
             toggleInput: "toggle-input",
             toggleLabel: "toggle-label",
@@ -174,16 +174,16 @@ export default class AnyButton {
         this.nodes.textInput = this.make('div', [this.api.styles.input, this.CSS.input, this.CSS.inputText], {
             contentEditable: !this.readOnly,
         });
-        this.nodes.textInput.dataset.placeholder = this.api.i18n.t('Button Text');
+        this.nodes.textInput.dataset.placeholder = this.api.i18n.t('Type button copy');
 
         this.nodes.linkInput = this.make('div', [this.api.styles.input, this.CSS.input,  this.CSS.inputLink], {
             contentEditable: !this.readOnly,
         })
-        this.nodes.linkInput.dataset.placeholder = this.api.i18n.t('Link Url');
+        this.nodes.linkInput.dataset.placeholder = this.api.i18n.t('Paste or type URL');
 
         this.nodes.registButton = this.make('button',[this.api.styles.button, this.CSS.registButton]);
         this.nodes.registButton.type = 'button';
-        this.nodes.registButton.textContent = this.api.i18n.t('Set');
+        this.nodes.registButton.textContent = this.api.i18n.t('Add button');
 
 
         this.nodes.registButton.addEventListener('click', (event) => {
