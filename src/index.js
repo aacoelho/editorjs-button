@@ -184,10 +184,11 @@ export default class AnyButton {
         if (this._data.link !== "") {
             this.init()
             this.show(AnyButton.STATE.VIEW)
+        } else {
+            this.show(AnyButton.STATE.EDIT)
         }
 
         this.nodes.wrapper.appendChild(this.nodes.container);
-        this.show(AnyButton.STATE.EDIT)
 
         this.updateAlign(this.data.align);
 
