@@ -157,6 +157,7 @@ export default class AnyButton {
         }
 
         this.nodes.wrapper.appendChild(this.nodes.container);
+        this.show(AnyButton.STATE.EDIT)
 
         return this.nodes.wrapper;
     }
