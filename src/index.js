@@ -106,12 +106,12 @@ export default class AnyButton {
             wrapper: null,
             container: null,
             inputHolder: null,
-            toggleHolder: null,
             anyButtonHolder: null,
             textInput: null,
             linkInput: null,
             registButton: null,
             anyButton: null,
+            state: AnyButton.STATE.VIEW,
         }
         //css overwrite
         const _CSS = {
@@ -127,9 +127,6 @@ export default class AnyButton {
             registButton: "anyButtonContainer__registerButton",
             anyButtonHolder: "anyButtonContainer__anyButtonHolder",
             btnColor: "cdx-btn--default",
-            toggleSwitch: "toggle-switch",
-            toggleInput: "toggle-input",
-            toggleLabel: "toggle-label",
         }
 
         this.CSS = Object.assign(_CSS, config.css)
@@ -146,15 +143,11 @@ export default class AnyButton {
         this.nodes.wrapper = this.make('div', this.CSS.baseClass);
         this.nodes.container = this.make('div', this.CSS.container); //twitter-embed-tool
 
-        //入力用
+        //input
         this.nodes.inputHolder = this.makeInputHolder();
-        //toggle
-        this.nodes.toggleHolder = this.makeToggle();
         //display button
         this.nodes.anyButtonHolder = this.makeAnyButtonHolder();
 
-
-        this.nodes.container.appendChild(this.nodes.toggleHolder);
         this.nodes.container.appendChild(this.nodes.inputHolder);
         this.nodes.container.appendChild(this.nodes.anyButtonHolder);
 
@@ -167,6 +160,26 @@ export default class AnyButton {
 
         return this.nodes.wrapper;
     }
+
+      /**
+   * Create Block's settings block
+   *
+   * @returns {array}
+   */
+  renderSettings() {
+    const edit = {
+      icon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 498 512"><path fill="#5C6B7A" fill-rule="nonzero" d="M439.084 280.96c1.024-8.192 1.792-16.512 1.792-24.96s-.768-16.768-1.792-24.96l54.127-42.368c4.863-3.84 6.27-10.752 3.071-16.384l-51.184-88.704c-3.199-5.504-9.853-7.808-15.61-5.504l-63.725 25.728c-13.18-10.112-27.639-18.688-43.25-25.216l-9.597-67.84C311.764 4.736 306.518 0 300.12 0H197.752c-6.398 0-11.644 4.736-12.668 10.752l-9.597 67.84c-15.611 6.528-30.07 14.976-43.25 25.216L68.513 78.08c-5.758-2.176-12.412 0-15.611 5.504L1.718 172.288c-3.2 5.504-1.792 12.416 3.07 16.384l54 42.368c-1.024 8.192-1.792 16.512-1.792 24.96s.768 16.768 1.792 24.96l-54 42.368c-4.862 3.84-6.27 10.752-3.07 16.384l51.184 88.704c3.199 5.504 9.853 7.808 15.61 5.504l63.725-25.728c13.18 10.112 27.639 18.688 43.25 25.216l9.597 67.84c1.024 6.016 6.27 10.752 12.668 10.752H300.12c6.398 0 11.644-4.736 12.668-10.752l9.597-67.84c15.611-6.528 30.07-14.976 43.25-25.216l63.724 25.728c5.758 2.176 12.412 0 15.611-5.504l51.184-88.704c3.2-5.504 1.792-12.416-3.07-16.384l-54-42.368ZM248.936 345.6c-49.52 0-89.572-40.064-89.572-89.6 0-49.536 40.052-89.6 89.572-89.6s89.572 40.064 89.572 89.6c0 49.536-40.052 89.6-89.572 89.6Z"/></svg>',
+      name: 'edit-button',
+      label: 'Edit button',
+      toggle: 'edit',
+      isActive: this.nodes.state === AnyButton.STATE.EDIT,
+      onActivate: () => {
+        this.show(this.nodes.state === 0 ? 1 : 0);
+      },
+    };
+
+    return [edit];
+  }
 
 
     makeInputHolder() {
@@ -209,6 +222,7 @@ export default class AnyButton {
     show(state){
         this.nodes.anyButton.textContent = this._data.text;
         this.nodes.anyButton.setAttribute("href", this._data.link);
+        this.nodes.state = state;
         this.changeState(state);
     }
 
@@ -224,47 +238,18 @@ export default class AnyButton {
     }
 
     changeState(state){
+
         switch (state) {
             case AnyButton.STATE.EDIT:
                 this.nodes.inputHolder.classList.remove(this.CSS.hide);
                 this.nodes.anyButtonHolder.classList.add(this.CSS.hide);
-                this.nodes.toggleInput.checked = 0;
 
                 break;
             case AnyButton.STATE.VIEW:
                 this.nodes.inputHolder.classList.add(this.CSS.hide);
                 this.nodes.anyButtonHolder.classList.remove(this.CSS.hide);
-                this.nodes.toggleInput.checked = 1;
                 break;
         }
-    }
-
-    makeToggle(){
-        /**
-         * <div class="toggle-switch">
-         <input id="toggle" class="toggle-input" type='checkbox' />
-         <label for="toggle" class="toggle-label"/>
-         </div>
-         */
-        const toggleHolder = this.make('div', [this.CSS.toggleSwitch]);
-        this.nodes.toggleInput = this.make('input', [this.CSS.toggleInput],
-            {
-                "type":"checkbox",
-                "id":"toggle"
-            });
-        const label = this.make('label', [this.CSS.toggleLabel],{"for":"toggle"});
-
-        this.nodes.toggleInput.addEventListener("change", (event) => {
-            this.data = {
-                "link": this.nodes.linkInput.textContent,
-                "text": this.nodes.textInput.textContent
-            }
-            this.show(Number(this.nodes.toggleInput.checked))
-        })
-        toggleHolder.appendChild(this.nodes.toggleInput);
-        toggleHolder.appendChild(label);
-
-        return toggleHolder;
     }
 
     /**
