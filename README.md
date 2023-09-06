@@ -17,7 +17,7 @@ npm i --save editorjs-button
 Include module at your application
 
 ```javascript
-const anyButton = require('anyButton');
+const anyButton = require("anyButton")
 ```
 
 ### Download to your project's source dir
@@ -79,7 +79,7 @@ i18n: {
 },
 ```
 
-if customize css, input filed, button design, and etc... 
+if customize css, input filed, button design, and etc...
 
 ```
 config:{
@@ -91,19 +91,19 @@ config:{
 
 ## Output data
 
-| Field  | Type     | Description      |
-| ------ | -------- | ---------------- |
-| link   | `string` | Exclusion HTML Tag text |
-| text   | `string` | Exclusion HTML Tag text |
-
+| Field | Type     | Description                                             |
+| ----- | -------- | ------------------------------------------------------- |
+| link  | `string` | Exclusion HTML Tag text                                 |
+| text  | `string` | Exclusion HTML Tag text                                 |
+| align | `string` | Align type should be one of `left`, `center` or `right` |
 
 ```json
 {
-            "type" : "AnyButton",
-            "data" : {
-                "link" : "https://editorjs.io/",
-                "text" : "editorjs official"
-            }
-        }
+  "type": "AnyButton",
+  "data": {
+    "link": "https://editorjs.io/",
+    "text": "editorjs official",
+    "align": "center"
+  }
+}
 ```
-
