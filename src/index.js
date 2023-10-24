@@ -21,6 +21,7 @@ export default class AnyButton {
     static get isReadOnlySupported() {
         return true;
     }
+
     /**
      *
      * @returns {boolean}
@@ -29,11 +30,10 @@ export default class AnyButton {
         return false;
     }
 
-
     /**
      *
      * @returns {{EDIT: number, VIEW: number}}
-     * @constructor
+     * @class
      */
     static get STATE() {
         return {
@@ -42,12 +42,12 @@ export default class AnyButton {
         };
     }
 
-      /**
-   * Default Alert align type
-   *
-   * @public
-   * @returns {string}
-   */
+        /**
+     * Default Alert align type
+     *
+     * @public
+     * @returns {string}
+     */
     static get DEFAULT_ALIGN_TYPE() {
         return 'center';
     }
@@ -63,6 +63,7 @@ export default class AnyButton {
             align: this.api.sanitizer.clean(data.align || AnyButton.DEFAULT_ALIGN_TYPE, AnyButton.sanitize)
         });
     }
+
     /**
      *
      * @returns {{text: string, link: string, align: string}}
@@ -83,6 +84,7 @@ export default class AnyButton {
 
         return true;
     }
+
     /**
      *
      * @param block
@@ -161,7 +163,7 @@ export default class AnyButton {
         }
 
         this.CSS = Object.assign(_CSS, config.css)
-          
+            
         this.data = {
             link: data.link || "",
             text: data.text || "",
@@ -169,6 +171,13 @@ export default class AnyButton {
         };
     }
 
+    /**
+     * Renders Block content
+     *
+     * @public
+     *
+     * @returns {HTMLDivElement}
+     */
     render(){
         this.nodes.wrapper = this.make('div', this.CSS.baseClass);
         this.nodes.container = this.make('div', this.CSS.container); //twitter-embed-tool
@@ -198,7 +207,7 @@ export default class AnyButton {
     /**
      * Create Block's settings block
      *
-     * @returns {array}
+     * @returns {Array}
      */
     renderSettings() {
         const edit = {
@@ -226,6 +235,11 @@ export default class AnyButton {
         return [edit, ...alignTypes];
     }
 
+    /**
+     * Update Align
+     * 
+     * @param {string} currentAlign 
+     */
     updateAlign(currentAlign) {
         if (this.data.align === currentAlign && this.nodes.anyButton.classList.contains(`cdx-pr-button--${currentAlign}`)) return;
 
@@ -236,6 +250,11 @@ export default class AnyButton {
         });
     }
 
+    /**
+     * Prepare input holder
+     *
+     * @returns {HTMLElement}
+     */
     makeInputHolder() {
         const inputHolder = this.make('div', [this.CSS.inputHolder]);
         this.nodes.textInput = this.make('div', [this.api.styles.input, this.CSS.input, this.CSS.inputText], {
@@ -269,11 +288,17 @@ export default class AnyButton {
         return inputHolder;
     }
 
+    /**
+     * Init elements with data
+     */
     init(){
         this.nodes.textInput.textContent = this._data.text;
         this.nodes.linkInput.textContent = this._data.link;
     }
 
+    /**
+     * Show current state
+     */
     show(state){
         this.nodes.anyButton.textContent = this._data.text;
         this.nodes.anyButton.setAttribute("href", this._data.link);
@@ -281,6 +306,11 @@ export default class AnyButton {
         this.changeState(state);
     }
 
+    /**
+     * Prepare button preview holder
+     *
+     * @returns {HTMLElement}
+     */
     makeAnyButtonHolder(){
         const anyButtonHolder = this.make('div', [this.CSS.hide, this.CSS.anyButtonHolder]);
         this.nodes.anyButton = this.make('a',[this.CSS.btn, this.CSS.btnColor],{
@@ -292,12 +322,18 @@ export default class AnyButton {
         return anyButtonHolder;
     }
 
+    /**
+     * Update state
+     *
+     * @param {number} state - state
+     */
     changeState(state){
 
         switch (state) {
             case AnyButton.STATE.EDIT:
                 this.nodes.inputHolder.classList.remove(this.CSS.hide);
                 this.nodes.anyButtonHolder.classList.add(this.CSS.hide);
+                this.autofocusTextInput();
 
                 break;
             case AnyButton.STATE.VIEW:
@@ -306,7 +342,7 @@ export default class AnyButton {
                 break;
         }
     }
-    
+
     /**
      * Autofocus Button Copy
      *
