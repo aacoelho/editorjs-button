@@ -306,6 +306,26 @@ export default class AnyButton {
                 break;
         }
     }
+    
+    /**
+     * Autofocus Button Copy
+     *
+     */
+    autofocusTextInput() {
+        // Move the cursor to the end of the div content
+        const range = document.createRange();
+        const sel = window.getSelection();
+        range.selectNodeContents(this.nodes.textInput);
+        range.collapse(false); // collapse range to the end
+        sel.removeAllRanges(); // remove any existing ranges
+        sel.addRange(range); // add new range at the end
+
+        // Close toolbar
+        this.api.toolbar.close();
+
+        // Focus on the text input
+        this.nodes.textInput.focus();
+    }
 
     /**
      * node 作成用
