@@ -319,6 +319,15 @@ export default class AnyButton {
         });
         this.nodes.anyButton.textContent = this.api.i18n.t("Default Button");
         anyButtonHolder.appendChild(this.nodes.anyButton);
+
+        // Change to Edit state if button clicked
+        this.nodes.anyButton.addEventListener('click', (event) => {
+            // Avoid opening link
+            event.preventDefault();
+
+            this.show(AnyButton.STATE.EDIT);
+        });
+
         return anyButtonHolder;
     }
 
