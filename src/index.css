@@ -1,7 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
 
 .hide {
-  display: none !important;
+  /* display: none !important; */
+  opacity: 0;
+  visibility: hidden;
+  position: absolute;
 }
 
 .anyButtonContainer {
@@ -29,8 +32,7 @@
   align-items: center;
   font-family: "Roboto", sans-serif;
 
-  transition: background-color 200ms ease-out, border-color 200ms ease-out,
-    color 200ms ease-out;
+  transition: background-color 200ms ease-out, border-color 200ms ease-out, color 200ms ease-out;
 
   &::before {
     content: "";
@@ -136,8 +138,8 @@
   padding: 0.375rem 0.75rem;
   font-size: 1rem;
   border-radius: 0.25rem;
-  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
-    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out,
+    box-shadow 0.15s ease-in-out;
 }
 
 .cdx-btn--default {
@@ -163,9 +165,6 @@
 }
 
 /* Editor.js */
-#editorjs
-  .ce-toolbar
-  .ce-settings
-  .ce-popover-item.ce-popover-item--active[data-item-name="edit-button"] {
+#editorjs .ce-toolbar .ce-settings .ce-popover-item.ce-popover-item--active[data-item-name="edit-button"] {
   display: none;
 }
