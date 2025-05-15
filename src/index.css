@@ -2,6 +2,7 @@
 
 .hide {
   /* display: none !important; */
+  display: flex !important;
   opacity: 0;
   visibility: hidden;
   position: absolute;
