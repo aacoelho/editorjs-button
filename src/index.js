@@ -60,7 +60,8 @@ export default class AnyButton {
         this._data = Object.assign({}, {
             link: this.api.sanitizer.clean(data.link || "", AnyButton.sanitize),
             text: this.api.sanitizer.clean(data.text || "", AnyButton.sanitize),
-            align: this.api.sanitizer.clean(data.align || AnyButton.DEFAULT_ALIGN_TYPE, AnyButton.sanitize)
+            align: this.api.sanitizer.clean(data.align || AnyButton.DEFAULT_ALIGN_TYPE, AnyButton.sanitize),
+            openInNewTab: data.openInNewTab === undefined ? false : !!data.openInNewTab
         });
     }
 
@@ -123,6 +124,9 @@ export default class AnyButton {
             anyButtonHolder: null,
             textInput: null,
             linkInput: null,
+            openInNewTabHolder: null,
+            openInNewTabLabel: null,
+            openInNewTabInput: null,
             registButton: null,
             anyButton: null,
             state: AnyButton.STATE.VIEW,
@@ -157,6 +161,9 @@ export default class AnyButton {
             inputHolder: "anyButtonContainer__inputHolder",
             inputText: "anyButtonContainer__input--text",
             inputLink: "anyButtonContainer__input--link",
+            openInNewTabHolder: "anyButtonContainer__openInNewTabHolder",
+            openInNewTabLabel: "anyButtonContainer__openInNewTabLabel",
+            openInNewTabInput: "anyButtonContainer__openInNewTabInput",
             registButton: "anyButtonContainer__registerButton",
             anyButtonHolder: "anyButtonContainer__anyButtonHolder",
             btnColor: "cdx-btn--default",
@@ -167,7 +174,8 @@ export default class AnyButton {
         this.data = {
             link: data.link || "",
             text: data.text || "",
-            align: data.align || AnyButton.DEFAULT_ALIGN_TYPE
+            align: data.align || AnyButton.DEFAULT_ALIGN_TYPE,
+            openInNewTab: data.openInNewTab === undefined ? false : !!data.openInNewTab
         };
     }
 
@@ -276,13 +284,26 @@ export default class AnyButton {
             this.data = {
                 "link": this.nodes.linkInput.textContent,
                 "text": this.nodes.textInput.textContent,
-                "align": this.data.align
+                "align": this.data.align,
+                "openInNewTab": this.nodes.openInNewTabInput.checked
             }
             this.show(AnyButton.STATE.VIEW);
         });
 
+        this.nodes.openInNewTabHolder = this.make('div', [this.CSS.openInNewTabHolder]);
+        this.nodes.openInNewTabLabel = this.make('label', [this.CSS.openInNewTabLabel]);
+        this.nodes.openInNewTabInput = this.make('input', [this.CSS.openInNewTabInput], {
+            type: 'checkbox',
+            checked: this._data.openInNewTab,
+            disabled: this.readOnly,
+        });
+        this.nodes.openInNewTabLabel.appendChild(this.nodes.openInNewTabInput);
+        this.nodes.openInNewTabLabel.appendChild(document.createTextNode(this.api.i18n.t('Open link in a new tab')));
+        this.nodes.openInNewTabHolder.appendChild(this.nodes.openInNewTabLabel);
+
         inputHolder.appendChild(this.nodes.textInput);
         inputHolder.appendChild(this.nodes.linkInput);
+        inputHolder.appendChild(this.nodes.openInNewTabHolder);
         inputHolder.appendChild(this.nodes.registButton);
 
         return inputHolder;
@@ -294,6 +315,7 @@ export default class AnyButton {
     init(){
         this.nodes.textInput.textContent = this._data.text;
         this.nodes.linkInput.textContent = this._data.link;
+        this.nodes.openInNewTabInput.checked = this._data.openInNewTab;
     }
 
     /**
@@ -302,6 +324,13 @@ export default class AnyButton {
     show(state){
         this.nodes.anyButton.textContent = this._data.text;
         this.nodes.anyButton.setAttribute("href", this._data.link);
+        if (this._data.openInNewTab) {
+            this.nodes.anyButton.setAttribute("target", "_blank");
+            this.nodes.anyButton.setAttribute("rel", "nofollow noindex noreferrer");
+        } else {
+            this.nodes.anyButton.removeAttribute("target");
+            this.nodes.anyButton.removeAttribute("rel");
+        }
         this.nodes.state = state;
         this.changeState(state);
     }
@@ -313,10 +342,7 @@ export default class AnyButton {
      */
     makeAnyButtonHolder(){
         const anyButtonHolder = this.make('div', [this.CSS.hide, this.CSS.anyButtonHolder]);
-        this.nodes.anyButton = this.make('a',[this.CSS.btn, this.CSS.btnColor],{
-            target: '_blank',
-            rel: 'nofollow noindex noreferrer',
-        });
+        this.nodes.anyButton = this.make('a',[this.CSS.btn, this.CSS.btnColor]);
         this.nodes.anyButton.textContent = this.api.i18n.t("Default Button");
         anyButtonHolder.appendChild(this.nodes.anyButton);
 

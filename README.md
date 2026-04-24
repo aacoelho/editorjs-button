@@ -96,6 +96,9 @@ config:{
 | link  | `string` | Exclusion HTML Tag text                                 |
 | text  | `string` | Exclusion HTML Tag text                                 |
 | align | `string` | Align type should be one of `left`, `center` or `right` |
+| openInNewTab | `boolean` | Whether the button opens the link in a new tab |
+
+Default: `false` (opens in the same tab).
 
 ```json
 {
@@ -103,7 +106,8 @@ config:{
   "data": {
     "link": "https://editorjs.io/",
     "text": "editorjs official",
-    "align": "center"
+    "align": "center",
+    "openInNewTab": true
   }
 }
 ```
