@@ -16,6 +16,7 @@
 .anyButtonContainer__registerButton {
   -webkit-appearance: none;
   -moz-appearance: none;
+  appearance: none;
   height: 32px;
   padding: 8px 10px 8px 8px;
   background-color: #0080ff;
@@ -85,6 +86,61 @@
 
 .anyButtonContainer__input + .anyButtonContainer__input {
   margin-top: 8px;
+}
+
+.anyButtonContainer__openInNewTabHolder {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.anyButtonContainer__openInNewTabLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  line-height: 1.3;
+  color: #2d3640;
+  cursor: pointer;
+}
+
+.anyButtonContainer__openInNewTabInput {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  border: 1px solid #d3dce6;
+  border-radius: 3px;
+  background-color: #ffffff;
+  display: inline-grid;
+  place-content: center;
+  transition: border-color 200ms ease-out, background-color 200ms ease-out, box-shadow 200ms ease-out;
+  cursor: pointer;
+}
+
+.anyButtonContainer__openInNewTabInput::before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' fill='%23ffffff' viewBox='0 0 256 256'%3E%3Cpath d='M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z'%3E%3C/path%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  opacity: 0;
+}
+
+.anyButtonContainer__openInNewTabInput:hover {
+  border-color: #0080ff;
+}
+
+.anyButtonContainer__openInNewTabInput:checked {
+  border-color: #0080ff;
+  background-color: #0080ff;
+}
+
+.anyButtonContainer__openInNewTabInput:checked::before {
+  opacity: 1;
 }
 
 .anyButtonContainer__input--link {
